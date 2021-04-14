@@ -1,14 +1,12 @@
+// Imports
+const bcrypt = require('bcrypt') // Bcrypt is a library used to safely store passwords
+const jwt = require('jsonwebtoken') // JWT generates unique security tokens
 const User = require('./models/userModel')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const justifyTxt = require('./justify')
 
-exports.test = (req, res) => {
-    res.setHeader('Content-Type', 'text/html')
-    res.status(200).send('<h1>Test<h1>')
-}
-
+// Function register, create a new user with User Model and save it to DB
 exports.register = async (req, res, next) => {
-        // password hashing function
+        // Password hashing function
         const hPassword = await bcrypt.hash(req.body.password, 10)
         const createUser = await new User({
             email: req.body.email,
@@ -17,22 +15,25 @@ exports.register = async (req, res, next) => {
     
         if (createUser) {
             res.status(200).json({
-                'message': 'Utilisateur créé'
+                'message': 'User created'
             })
             createUser.save()
         } else {
             res.status(400).json({
-                'error': 'Erreur'
+                'error': 'Error'
             })
         }
 }
 
-exports.login = async (req, res, next) => {
+// Function token, generates a token access for a registred user
+exports.token = async (req, res, next) => {
 
+    // Checking if there is an email address corresponding 
     const findUser = await User.findOne({
         email: req.body.email
     })
     if (findUser) {
+        // Checking if the password sent correspond to the one stored and send the Token if everything is OK
         if (await bcrypt.compare(req.body.password, findUser.password) == true) {
             res.status(200).json({
                 userId: findUser._id,
@@ -44,12 +45,22 @@ exports.login = async (req, res, next) => {
             });
         } else {
             res.status(401).send({
-                message: "Mot de passe incorrect !"
+                message: "Wrong password !"
             });
         }
     } else {
         res.status(401).json({
-            error: 'Utilisateur non trouvé !'
+            error: 'User not found !'
         });
     }
+}
+
+exports.justify = (req, res, next) => {
+    res.setHeader('Content-Type', 'text/plain')
+    res.status(200).send('<h1>Justify<h1>')
+    console.log('justify');
+    /*
+    @TODO récupérer le texte passé en paramètre de la requête (req.body) et le passer en argument de la fonction justifyTxt
+    retourner le résultat justifié dans res.body
+    */
 }

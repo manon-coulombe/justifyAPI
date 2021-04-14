@@ -1,13 +1,14 @@
+// Imports
 const express = require('express')
-// const bcrypt = require('bcrypt')
-// const jwt = require('jsonwebtoken')
+const auth = require('../middleware/auth')
 const userCtrl = require('../userController')
 
 const router = express.Router()
 
-// Users routes
-router.get('/test', userCtrl.test)
+// Configure API routes from user controller
 router.post('/register', userCtrl.register)
-router.post('/login', userCtrl.login)
+router.post('/token', userCtrl.token)
+router.post('/justify', auth, userCtrl.justify)
 
+// Exports
 module.exports = router

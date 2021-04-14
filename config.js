@@ -1,9 +1,7 @@
-// const dotenv = require('dotenv').config()
+const dotenv = require('dotenv').config() // dotenv is a module module that loads environment variables from a .env file
 
-// export default {
-//   MONGODB_URL: 'mongodb+srv://'+process.env.DB_USERNAME+':'+process.env.DB_PASSWORD+'@adatech.sbjlq.mongodb.net/site_meubles?retryWrites=true&w=majority'
-// };
-
-// 'mongodb+srv://'manon_coulombe:<password>@cluster0.a4p1y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-
+// Exports mongoDB URL
+module.exports = {
+  MONGODB_URL: 'mongodb+srv://'+process.env.DB_USERNAME+':'+process.env.DB_PASSWORD+'@cluster0.a4p1y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+}
 
