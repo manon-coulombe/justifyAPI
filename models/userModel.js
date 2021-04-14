@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
         minlength: 8,
         required: true
     },
-    // add word count for limit
+    // Add word count for limit
     count: {
         type: Number,
         min:0,
@@ -24,9 +24,9 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-// this plugin adds pre-save validation for unique fields within a schema (makes error handling easier)
+// This plugin adds pre-save validation for unique fields within a schema (makes error handling easier)
 userSchema.plugin(uniqueValidator)
 
-// using mongoose.model methode to export userShema as a model for db
+// Using mongoose.model methode to export userShema as a model for db
 const userModel = mongoose.model('User', userSchema)
 module.exports = userModel

@@ -1,27 +1,22 @@
 const jwt = require('jsonwebtoken')
 
 const auth = (req, res, next) => {
-
     try {
-        console.log('erreur 0');
-        console.log(req.headers.authorization);
+        // Get the token sent to the header and remove the keyword 'Bear' with split methode
         const token = req.headers.authorization.split(' ')[1]
-        console.log('erreur 1');
+        // Verify methode decodes token
         const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET')
-        console.log('erreur 2');
+        // Extract userID from decoded token
         const userId = decodedToken.userId
-        console.log('erreur 3');
+        // Check if there is a userID in the request body, and throw an error if it doesn't matches with the one from the token
         if (req.body.userId && req.body.userId !== userId) {
-            console.log('erreur 4');
             throw 'Invalid user ID'
         } else {
-            console.log('erreur 5');
             next()
         }
 
     } catch (error) {
-        console.log('test erreur');
-        res.status(401).json({ error: error | 'Requête non authentifiée !' })
+        res.status(401).json({ error: error | 'Unauthenticated request' })
     }
 }
 

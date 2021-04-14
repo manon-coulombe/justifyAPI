@@ -61,6 +61,7 @@ exports.justify = (req, res, next) => {
     console.log('justify');
     /*
     @TODO récupérer le texte passé en paramètre de la requête (req.body) et le passer en argument de la fonction justifyTxt
-    retourner le résultat justifié dans res.body
+    retourner le résultat justifié dans res.body.
+    Ajouter une fonction qui compte les mots envoyés par utilisateur, pour établir une limite 80000 mots.
     */
 }
